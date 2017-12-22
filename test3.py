@@ -21,15 +21,15 @@ class Agent:
         self.memory = deque(maxlen=2000)
         self.gamma = 0.95  # discount rate
         self.epsilon = 0.2 # exploration rate
-        self.learning_rate = 0.1
+        self.learning_rate = 0.01
         self.action_size = action_size
 
     def create_model(self):
         self.model = Sequential()
         # self.model.add(Dense(100, input_shape=(8,), activation='sigmoid'))
-        self.model.add(Dense(25, input_shape=(8,), activation='sigmoid'))
-        self.model.add(Dense(4, activation='sigmoid'))
-        self.model.load_weights("./models6/model9.h5")
+        self.model.add(Dense(100, input_shape=(8,), activation='sigmoid'))
+        self.model.add(Dense(4, activation='softmax'))
+        self.model.load_weights("./models6/model16.h5")
         # self.model.compile(optimizer='rmsprop', loss='categorical_crossentropy', metrics=['accuracy'])
 
     def remember(self, state, action, reward, next_state, done):
@@ -80,10 +80,13 @@ def process_state(current_state):
                 if min_dist > current_state['creep_dist']['BAD'][index]:
                     min_dist = current_state['creep_dist']['BAD'][index]
                     found = True
-    if found:
-        processed_state.append(min_dist)
+    if min_dist == 9999999:
+        processed_state.append(0)
     else:
-        processed_state.append(-min_dist)
+        if found:
+            processed_state.append(min_dist)
+        else:
+            processed_state.append(-min_dist)
 
     # RIGHT
     min_dist = 9999999
@@ -100,10 +103,13 @@ def process_state(current_state):
                 if min_dist > current_state['creep_dist']['BAD'][index]:
                     min_dist = current_state['creep_dist']['BAD'][index]
                     found = True
-    if found:
-        processed_state.append(min_dist)
+    if min_dist == 9999999:
+        processed_state.append(0)
     else:
-        processed_state.append(-min_dist)
+        if found:
+            processed_state.append(min_dist)
+        else:
+            processed_state.append(-min_dist)
 
     # TOP
     min_dist = 9999999
@@ -120,10 +126,13 @@ def process_state(current_state):
                 if min_dist > current_state['creep_dist']['BAD'][index]:
                     min_dist = current_state['creep_dist']['BAD'][index]
                     found = True
-    if found:
-        processed_state.append(min_dist)
+    if min_dist == 9999999:
+        processed_state.append(0)
     else:
-        processed_state.append(-min_dist)
+        if found:
+            processed_state.append(min_dist)
+        else:
+            processed_state.append(-min_dist)
 
     # BOTTOM
     min_dist = 9999999
@@ -140,10 +149,13 @@ def process_state(current_state):
                 if min_dist > current_state['creep_dist']['BAD'][index]:
                     min_dist = current_state['creep_dist']['BAD'][index]
                     found = True
-    if found:
-        processed_state.append(min_dist)
+    if min_dist == 9999999:
+        processed_state.append(0)
     else:
-        processed_state.append(-min_dist)
+        if found:
+            processed_state.append(min_dist)
+        else:
+            processed_state.append(-min_dist)
 
     return np.array((processed_state,))
 
