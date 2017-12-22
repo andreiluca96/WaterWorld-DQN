@@ -8,6 +8,9 @@ from keras.models import Sequential
 import random
 import matplotlib.pyplot as plt
 
+SECOND_AXIS_DIST = 10
+
+MAIN_AXIS_DIST = 50
 
 class Agent:
     def __init__(self, action_size):
@@ -78,84 +81,84 @@ def process_state(current_state):
     processed_state.append(current_state['player_velocity_y'])
 
     # LEFT
-    min_dist = -9999999
+    min_dist = 9999999
     found = False
     for index in range(len(current_state['creep_pos']['GOOD'])):
-        if current_state['player_x'] - 75 <= current_state['creep_pos']['GOOD'][index][0] <= current_state['player_x']:
-            if current_state['player_y'] - 10 <= current_state['creep_pos']['GOOD'][index][1] <= current_state['player_y'] + 10:
+        if current_state['player_x'] - MAIN_AXIS_DIST <= current_state['creep_pos']['GOOD'][index][0] <= current_state['player_x']:
+            if current_state['player_y'] - SECOND_AXIS_DIST <= current_state['creep_pos']['GOOD'][index][1] <= current_state['player_y'] + SECOND_AXIS_DIST:
                 if min_dist > current_state['creep_dist']['GOOD'][index]:
                     min_dist = current_state['creep_dist']['GOOD'][index]
 
     for index in range(len(current_state['creep_pos']['BAD'])):
-        if current_state['player_x'] - 75 <= current_state['creep_pos']['BAD'][index][0] <= current_state['player_x']:
-            if current_state['player_y'] - 10 <= current_state['creep_pos']['BAD'][index][1] <= current_state['player_y'] + 10:
+        if current_state['player_x'] - MAIN_AXIS_DIST <= current_state['creep_pos']['BAD'][index][0] <= current_state['player_x']:
+            if current_state['player_y'] - SECOND_AXIS_DIST <= current_state['creep_pos']['BAD'][index][1] <= current_state['player_y'] + SECOND_AXIS_DIST:
                 if min_dist > current_state['creep_dist']['BAD'][index]:
                     min_dist = current_state['creep_dist']['BAD'][index]
                     found = True
     if found:
-        processed_state.append(-min_dist)
-    else:
         processed_state.append(min_dist)
+    else:
+        processed_state.append(-min_dist)
 
     # RIGHT
-    min_dist = -9999999
+    min_dist = 9999999
     found = False
     for index in range(len(current_state['creep_pos']['GOOD'])):
-        if current_state['player_x'] <= current_state['creep_pos']['GOOD'][index][0] <= current_state['player_x'] + 75:
-            if current_state['player_y'] - 10 <= current_state['creep_pos']['GOOD'][index][1] <= current_state['player_y'] + 10:
+        if current_state['player_x'] <= current_state['creep_pos']['GOOD'][index][0] <= current_state['player_x'] + MAIN_AXIS_DIST:
+            if current_state['player_y'] - SECOND_AXIS_DIST <= current_state['creep_pos']['GOOD'][index][1] <= current_state['player_y'] + SECOND_AXIS_DIST:
                 if min_dist > current_state['creep_dist']['GOOD'][index]:
                     min_dist = current_state['creep_dist']['GOOD'][index]
 
     for index in range(len(current_state['creep_pos']['BAD'])):
-        if current_state['player_x'] <= current_state['creep_pos']['BAD'][index][0] <= current_state['player_x'] + 75:
-            if current_state['player_y'] - 10 <= current_state['creep_pos']['BAD'][index][1] <= current_state['player_y'] + 10:
+        if current_state['player_x'] <= current_state['creep_pos']['BAD'][index][0] <= current_state['player_x'] + MAIN_AXIS_DIST:
+            if current_state['player_y'] - SECOND_AXIS_DIST <= current_state['creep_pos']['BAD'][index][1] <= current_state['player_y'] + SECOND_AXIS_DIST:
                 if min_dist > current_state['creep_dist']['BAD'][index]:
                     min_dist = current_state['creep_dist']['BAD'][index]
                     found = True
     if found:
-        processed_state.append(-min_dist)
-    else:
         processed_state.append(min_dist)
+    else:
+        processed_state.append(-min_dist)
 
     # TOP
-    min_dist = -9999999
+    min_dist = 9999999
     found = False
     for index in range(len(current_state['creep_pos']['GOOD'])):
-        if current_state['player_y'] - 75 <= current_state['creep_pos']['GOOD'][index][1] <= current_state['player_y']:
-            if current_state['player_x'] - 10 <= current_state['creep_pos']['GOOD'][index][0] <= current_state['player_x'] + 10:
+        if current_state['player_y'] - MAIN_AXIS_DIST <= current_state['creep_pos']['GOOD'][index][1] <= current_state['player_y']:
+            if current_state['player_x'] - SECOND_AXIS_DIST <= current_state['creep_pos']['GOOD'][index][0] <= current_state['player_x'] + SECOND_AXIS_DIST:
                 if min_dist > current_state['creep_dist']['GOOD'][index]:
                     min_dist = current_state['creep_dist']['GOOD'][index]
 
     for index in range(len(current_state['creep_pos']['BAD'])):
-        if current_state['player_x'] <= current_state['creep_pos']['BAD'][index][0] <= current_state['player_x'] + 75:
-            if current_state['player_y'] - 10 <= current_state['creep_pos']['BAD'][index][1] <= current_state['player_y'] + 10:
+        if current_state['player_x'] <= current_state['creep_pos']['BAD'][index][0] <= current_state['player_x'] + MAIN_AXIS_DIST:
+            if current_state['player_y'] - SECOND_AXIS_DIST <= current_state['creep_pos']['BAD'][index][1] <= current_state['player_y'] + SECOND_AXIS_DIST:
                 if min_dist > current_state['creep_dist']['BAD'][index]:
                     min_dist = current_state['creep_dist']['BAD'][index]
                     found = True
     if found:
-        processed_state.append(-min_dist)
-    else:
         processed_state.append(min_dist)
+    else:
+        processed_state.append(-min_dist)
 
     # BOTTOM
-    min_dist = -9999999
+    min_dist = 9999999
     found = False
     for index in range(len(current_state['creep_pos']['GOOD'])):
-        if current_state['player_y'] <= current_state['creep_pos']['GOOD'][index][1] <= current_state['player_y'] + 75:
-            if current_state['player_x'] - 10 <= current_state['creep_pos']['GOOD'][index][0] <= current_state['player_x'] + 10:
+        if current_state['player_y'] <= current_state['creep_pos']['GOOD'][index][1] <= current_state['player_y'] + MAIN_AXIS_DIST:
+            if current_state['player_x'] - SECOND_AXIS_DIST <= current_state['creep_pos']['GOOD'][index][0] <= current_state['player_x'] + SECOND_AXIS_DIST:
                 if min_dist > current_state['creep_dist']['GOOD'][index]:
                     min_dist = current_state['creep_dist']['GOOD'][index]
 
     for index in range(len(current_state['creep_pos']['BAD'])):
-        if current_state['player_y'] <= current_state['creep_pos']['BAD'][index][1] <= current_state['player_y'] + 75:
-            if current_state['player_x'] - 10 <= current_state['creep_pos']['BAD'][index][0] <= current_state['player_x'] + 10:
+        if current_state['player_y'] <= current_state['creep_pos']['BAD'][index][1] <= current_state['player_y'] + MAIN_AXIS_DIST:
+            if current_state['player_x'] - SECOND_AXIS_DIST <= current_state['creep_pos']['BAD'][index][0] <= current_state['player_x'] + SECOND_AXIS_DIST:
                 if min_dist > current_state['creep_dist']['BAD'][index]:
                     min_dist = current_state['creep_dist']['BAD'][index]
                     found = True
     if found:
-        processed_state.append(-min_dist)
-    else:
         processed_state.append(min_dist)
+    else:
+        processed_state.append(-min_dist)
 
     return np.array((processed_state,))
 
